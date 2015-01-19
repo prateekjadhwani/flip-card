@@ -1,0 +1,158 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html" />
+<link rel="import" href="../bower_components/core-image/core-image.html" />
+<link rel="import" href="../bower_components/core-icon/core-icon.html" />
+<link rel="import" href="../bower_components/core-animation/core-animation.html" />
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html" />
+<link rel="import" href="../bower_components/paper-button/paper-button.html" />
+<link rel="import" href="../bower_components/paper-input/paper-input.html" />
+
+
+<polymer-element name="flip-card" attributes="name bgColor frontImgSrc url">
+    <template>
+        <style type="text/css">
+            :host {
+                display:block;
+                height:400px;
+                width: 300px;
+                background: {{bgColor}};
+                margin : 40px auto;
+                padding: 20px;
+            }
+            .front-img {
+                height: 200px;
+                width:200px;
+                border-radius: 200px;
+                margin: 20px auto;
+                display:block;
+            }
+            .name {
+                margin: 10px auto;
+                font-weight: normal;
+                width:100%;
+                text-align: center;
+                font-size: 45px;
+            }
+            paper-fab {
+                display: block;
+                margin: 10px auto;
+            }
+            #back{
+                width: 0;
+                height:0;
+                margin: 0 auto;
+                overflow: hidden;
+                text-align: center;
+            }
+            #front{
+                margin: 0 auto;
+                overflow: hidden;
+            }
+            paper-button {
+                background: #2299DD;
+                margin: 20px;
+                text-transform: capitalize;
+            }
+        </style>
+        
+        <div id="front">
+            <core-image class="front-img" src="{{frontImgSrc}}" sizing="contain"></core-image>
+            <h2 class="name">{{name}}</h2>
+            <paper-fab mini icon="swap-horiz" on-click="{{handleTurn}}"></paper-fab>
+        </div>
+        <div id="back">
+            <h3>Contact Details</h3>
+            <content></content>
+            <paper-button raised on-click="{{openMySite}}">My Website</paper-button>
+            <p>Built with <core-icon icon="polymer"></core-icon> Polymer</p>
+            <paper-fab mini icon="swap-horiz" on-click="{{handleTurn}}"></paper-fab>
+        </div>
+    </template>
+    <script>
+        Polymer('flip-card', {
+            bgColor: "#fff",
+            frontImgSrc: "tired_man.png",
+            name: "Prateek Jadhwani",
+            url: "http://www.prateekjadhwani.com",
+            displayedSection: 1,
+            ready: function() {
+                console.log("Ready to Rock and Roll");
+            },
+            handleTurn: function() {
+                this.animateBG();
+                if(this.displayedSection == 1) {
+                    this.animateHideSection(this.$.front);
+                    this.animateShowSection(this.$.back);
+                    this.displayedSection = 2;
+                }
+                else {
+                    this.animateHideSection(this.$.back);
+                    this.animateShowSection(this.$.front);
+                    this.displayedSection = 1;
+                }
+            },
+            animateBG: function() {
+                var animation = new CoreAnimation();
+                animation.duration = 500;
+                animation.keyframes = [
+                  {
+                      '-webkit-transform': 'rotateY(0deg)',
+                      'transform': 'rotateY(0deg)'
+                  },
+                  {
+                      '-webkit-transform': 'rotateY(90deg)',
+                      'transform': 'rotateY(90deg)'
+                  },
+                  {
+                      '-webkit-transform': 'rotateY(0deg)',
+                      'transform': 'rotateY(0deg)'
+                  }
+                ];
+                animation.target = this;
+                animation.play();
+            },
+            animateHideSection: function(element) {
+                var animation = new CoreAnimation();
+                animation.duration = 200;
+                animation.fill = "forwards";
+                animation.keyframes = [
+                  {
+                      'width': "100%",
+                      'height': "100%",
+                      'opacity' : '1'
+                  },
+                  {
+                      'width' : '0',
+                      'height': "0",
+                      'opacity' : '0'
+                  }
+                ];
+                animation.target = element;
+                animation.play();
+            },
+            animateShowSection: function(element) {
+                var animation = new CoreAnimation();
+                animation.delay = 250;
+                animation.duration = 200;
+                animation.fill = "forwards";
+                animation.keyframes = [
+                  {
+                      'opacity' : '0',
+                      'width' : '0',
+                      'height': "0"
+                  },
+                  {
+                      'width': "100%",
+                      'height': "100%",
+                      'opacity' : '1'
+                  }
+                ];
+                animation.target = element;
+                animation.play();
+            },
+            openMySite: function() {
+                window.open(this.url,'_blank');
+            }
+        });
+    </script>
+</polymer-element>

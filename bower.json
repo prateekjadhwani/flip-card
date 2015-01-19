@@ -1,0 +1,17 @@
+{
+  "name": "flip-card",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.2",
+    "paper-ripple": "Polymer/paper-ripple#^0.5.2",
+    "core-image": "Polymer/core-image#^0.5.2",
+    "core-icon": "Polymer/core-icon#^0.5.2",
+    "core-animation": "Polymer/core-animation#^0.5.2",
+    "paper-fab": "Polymer/paper-fab#^0.5.2",
+    "paper-button": "Polymer/paper-button#^0.5.2",
+    "paper-input": "Polymer/paper-input#^0.5.2"
+  },
+  "version": "0.1",
+  "homepage": "http://www.prateekjadhwani.com",
+  "author": "Prateek Jadhwani"
+}
